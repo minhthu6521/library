@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="LibraryModelStoreContainer" CdmEntityContainer="LibraryEntities">
+    <EntitySetMapping Name="Books">
+      <EntityTypeMapping TypeName="LibraryModel.Book">
+        <MappingFragment StoreEntitySet="Book">
+          <ScalarProperty Name="bookId" ColumnName="bookId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="author" ColumnName="author" />
+          <ScalarProperty Name="year" ColumnName="year" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BorrowedBooks">
+      <EntityTypeMapping TypeName="LibraryModel.BorrowedBook">
+        <MappingFragment StoreEntitySet="BorrowedBook">
+          <ScalarProperty Name="bookId" ColumnName="bookId" />
+          <ScalarProperty Name="refNo" ColumnName="refNo" />
+          <ScalarProperty Name="copyId" ColumnName="copyId" />
+          <ScalarProperty Name="customerId" ColumnName="customerId" />
+          <ScalarProperty Name="borrowDate" ColumnName="borrowDate" />
+          <ScalarProperty Name="dueDate" ColumnName="dueDate" />
+          <ScalarProperty Name="renewNo" ColumnName="renewNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Copies">
+      <EntityTypeMapping TypeName="LibraryModel.Copy">
+        <MappingFragment StoreEntitySet="Copies">
+          <ScalarProperty Name="bookId" ColumnName="bookId" />
+          <ScalarProperty Name="copyId" ColumnName="copyId" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="LibraryModel.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="customerId" ColumnName="customerId" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="email" ColumnName="email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Genres">
+      <EntityTypeMapping TypeName="LibraryModel.Genre">
+        <MappingFragment StoreEntitySet="Genre">
+          <ScalarProperty Name="bookId" ColumnName="bookId" />
+          <ScalarProperty Name="genre1" ColumnName="genre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reservations">
+      <EntityTypeMapping TypeName="LibraryModel.Reservation">
+        <MappingFragment StoreEntitySet="Reservation">
+          <ScalarProperty Name="refNo" ColumnName="refNo" />
+          <ScalarProperty Name="bookId" ColumnName="bookId" />
+          <ScalarProperty Name="customerId" ColumnName="customerId" />
+          <ScalarProperty Name="reserveDate" ColumnName="reserveDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

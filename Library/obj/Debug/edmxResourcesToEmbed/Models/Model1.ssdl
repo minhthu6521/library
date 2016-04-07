@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LibraryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="bookId" />
+    </Key>
+    <Property Name="bookId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="author" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="year" Type="int" Nullable="false" />
+    <Property Name="description" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BorrowedBook">
+    <Key>
+      <PropertyRef Name="refNo" />
+    </Key>
+    <Property Name="bookId" Type="int" Nullable="false" />
+    <Property Name="refNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="copyId" Type="int" Nullable="false" />
+    <Property Name="customerId" Type="int" Nullable="false" />
+    <Property Name="borrowDate" Type="date" Nullable="false" />
+    <Property Name="dueDate" Type="date" Nullable="false" />
+    <Property Name="renewNo" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Copies">
+    <Key>
+      <PropertyRef Name="bookId" />
+      <PropertyRef Name="copyId" />
+    </Key>
+    <Property Name="bookId" Type="int" Nullable="false" />
+    <Property Name="copyId" Type="int" Nullable="false" />
+    <Property Name="status" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="customerId" />
+    </Key>
+    <Property Name="customerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="firstName" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="lastName" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="dateOfBirth" Type="date" Nullable="false" />
+    <Property Name="address" Type="varchar(max)" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Genre">
+    <Key>
+      <PropertyRef Name="bookId" />
+      <PropertyRef Name="genre" />
+    </Key>
+    <Property Name="bookId" Type="int" Nullable="false" />
+    <Property Name="genre" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Reservation">
+    <Key>
+      <PropertyRef Name="refNo" />
+    </Key>
+    <Property Name="refNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="bookId" Type="int" Nullable="false" />
+    <Property Name="customerId" Type="int" Nullable="false" />
+    <Property Name="reserveDate" Type="date" Nullable="false" />
+  </EntityType>
+  <Association Name="fk_BorrowedBook_Book">
+    <End Role="Book" Type="Self.Book" Multiplicity="1" />
+    <End Role="BorrowedBook" Type="Self.BorrowedBook" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="bookId" />
+      </Principal>
+      <Dependent Role="BorrowedBook">
+        <PropertyRef Name="bookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_BorrowedBook_Copies">
+    <End Role="Copies" Type="Self.Copies" Multiplicity="1" />
+    <End Role="BorrowedBook" Type="Self.BorrowedBook" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Copies">
+        <PropertyRef Name="bookId" />
+        <PropertyRef Name="copyId" />
+      </Principal>
+      <Dependent Role="BorrowedBook">
+        <PropertyRef Name="bookId" />
+        <PropertyRef Name="copyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_BorrowedBook_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="BorrowedBook" Type="Self.BorrowedBook" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="customerId" />
+      </Principal>
+      <Dependent Role="BorrowedBook">
+        <PropertyRef Name="customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Copies_Book">
+    <End Role="Book" Type="Self.Book" Multiplicity="1" />
+    <End Role="Copies" Type="Self.Copies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="bookId" />
+      </Principal>
+      <Dependent Role="Copies">
+        <PropertyRef Name="bookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Genre_Book">
+    <End Role="Book" Type="Self.Book" Multiplicity="1" />
+    <End Role="Genre" Type="Self.Genre" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="bookId" />
+      </Principal>
+      <Dependent Role="Genre">
+        <PropertyRef Name="bookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Reservation_Book">
+    <End Role="Book" Type="Self.Book" Multiplicity="1" />
+    <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="bookId" />
+      </Principal>
+      <Dependent Role="Reservation">
+        <PropertyRef Name="bookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Reservation_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="customerId" />
+      </Principal>
+      <Dependent Role="Reservation">
+        <PropertyRef Name="customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LibraryModelStoreContainer">
+    <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BorrowedBook" EntityType="Self.BorrowedBook" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Copies" EntityType="Self.Copies" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_BorrowedBook_Book" Association="Self.fk_BorrowedBook_Book">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="BorrowedBook" EntitySet="BorrowedBook" />
+    </AssociationSet>
+    <AssociationSet Name="fk_BorrowedBook_Copies" Association="Self.fk_BorrowedBook_Copies">
+      <End Role="Copies" EntitySet="Copies" />
+      <End Role="BorrowedBook" EntitySet="BorrowedBook" />
+    </AssociationSet>
+    <AssociationSet Name="fk_BorrowedBook_Customer" Association="Self.fk_BorrowedBook_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="BorrowedBook" EntitySet="BorrowedBook" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Copies_Book" Association="Self.fk_Copies_Book">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="Copies" EntitySet="Copies" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Genre_Book" Association="Self.fk_Genre_Book">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="Genre" EntitySet="Genre" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Reservation_Book" Association="Self.fk_Reservation_Book">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="Reservation" EntitySet="Reservation" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Reservation_Customer" Association="Self.fk_Reservation_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Reservation" EntitySet="Reservation" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
